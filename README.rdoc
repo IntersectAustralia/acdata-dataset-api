@@ -1,6 +1,6 @@
 = acdata-dataset-api
 
-Description goes here.
+An API for adding datasets to ACData
 
 == Contributing to acdata-dataset-api
  
@@ -14,6 +14,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2012 Sean McCarthy. See LICENSE.txt for
+Copyright (c) 2012 Intersect Australia Ltd. See LICENSE.txt for
 further details.
 
