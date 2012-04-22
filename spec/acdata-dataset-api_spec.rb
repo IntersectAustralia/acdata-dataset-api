@@ -16,6 +16,9 @@ describe ACDataDatasetAPI do
   let(:samples_json){
 '{"samples":[{"id":16,"name":"Raman instrument sample (sp metadata file)","datasets":["Et Laudantium"]},{"id":17,"name":"NMR instrument sample","datasets":["Et Quod"]},{"id":18,"name":"FTIR instrument sample (JCAMP-DX metadata file)","datasets":["Repellat Dolores"]},{"id":26,"name":"Raman instrument sample (sp metadata file)","datasets":["Nam Consequatur"]}],"projects":{"owner":[{"name":"Odit Laborum Optio","experiments":[],"samples":[{"id":16,"name":"Raman instrument sample (sp metadata file)","datasets":["Et Laudantium"]},{"id":17,"name":"NMR instrument sample","datasets":["Et Quod"]},{"id":18,"name":"FTIR instrument sample (JCAMP-DX metadata file)","datasets":["Repellat Dolores"]}]},{"name":"Illum Consequuntur Ad","experiments":[],"samples":[]},{"name":"Officiis Praesentium Commodi Assumenda Quae","experiments":[],"samples":[]}],"collaborator":[{"name":"Non Voluptatem Omnis","experiments":[],"samples":[{"id":26,"name":"Raman instrument sample (sp metadata file)","datasets":["Nam Consequatur"]}]}]}}'
   }
+  let(:experiments_json){
+'{ "experiments": [ { "id": 77, "name": "Totam Rerum" }, { "id": 79, "name": "Dolor Sint" } ] }' 
+  }
   let(:projects_json){
 '{"projects":[{"id":82, "name":"Facilis Aut Voluptatem"}, {"id":83, "name":"Et Tenetur"}, {"id":84, "name":"Quisquam Velit"}, {"id":146, "name":"NMR Server Data"}]}'
   }
@@ -48,6 +51,12 @@ describe ACDataDatasetAPI do
     stub_request(:get, 'http://example.com/api/projects').to_return(:body => projects_json, :status => [200, 'OK'])
     projects = @api.projects(@session_id)
     projects.should have_key('projects')
+  end
+
+  it "should list experiments" do
+    stub_request(:get, 'http://example.com/api/experiments').to_return(:body => experiments_json, :status => [200, 'OK'])
+    projects = @api.experiments(@session_id)
+    projects.should have_key('experiments')
   end
 
   describe "creating samples" do
