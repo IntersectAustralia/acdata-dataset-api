@@ -18,7 +18,13 @@ class ACDataDatasetAPI
   def login(username, password)
     signin_url = URI.parse(@base_url + SIGNIN_URL)
     http = Net::HTTP::new(signin_url.host, signin_url.port)
-    http.use_ssl = true if signin_url.scheme == 'https'
+    
+    # Trust self signed certificate
+    if signin_url.scheme == 'https'
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
     req = Net::HTTP::Post.new(
         signin_url.path,
         initheader = {
@@ -49,7 +55,11 @@ class ACDataDatasetAPI
   def create_sample(session, opts)
     url = URI.parse("#{@base_url + SAMPLES_URL}")
     http = Net::HTTP::new(url.host, url.port)
-    http.use_ssl = true if url.scheme == 'https'
+
+    if url.scheme == 'https'
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
 
     req = Net::HTTP::Post.new(
         url.path,
@@ -79,7 +89,11 @@ class ACDataDatasetAPI
 
     url = URI.parse("#{@base_url + DATASET_URL}")
     http = Net::HTTP::new(url.host, url.port)
-    http.use_ssl = true if url.scheme == 'https'
+
+    if url.scheme == 'https'
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
 
     req = Net::HTTP::Post.new(
         url.path,
@@ -155,7 +169,7 @@ class ACDataDatasetAPI
 
   def do_action(session, action_url)
     url = URI.parse(@base_url + action_url)
-    http = Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https')
+    http = Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE)
     initheader = {
       'Content-type' => 'application/json',
       'Accept'       => 'application/json'
