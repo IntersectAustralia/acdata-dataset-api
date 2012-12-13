@@ -16,5 +16,5 @@ doc
 pkg
 
 # PROJECT::SPECIFIC
-*.gem
+#*.gem
 Gemfile.lock
